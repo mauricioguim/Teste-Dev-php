@@ -47,7 +47,7 @@ class BrasilApi
             return json_decode($response->getBody()->getContents(), true);
 
         } catch (ClientException $e) {
-            if ($e->getResponse()->getStatusCode() === 404) {
+            if ($e->getResponse()->getStatusCode() !== 200) {
                 return null;
             }
             throw $e;

@@ -38,18 +38,18 @@ class CEPValidation implements ValidationRule
         $cep = preg_replace('/[^0-9]/', '', $value);
 
         if (strlen($cep) !== 8) {
-            $fail('The :attribute must be exactly 8 digits.');
+            $fail('The CEP must be exactly 8 digits.');
             return;
         }
 
         try {
             $result = $this->brasilApi->getCep($cep);
 
-            if ($result === null) {
-                $fail('The :attribute is not a valid CEP.');
+            if (is_null($result)) {
+                $fail('The CEP is not a valid CEP.');
             }
-        } catch (\Exception $e) {
-            $fail('Unable to validate :attribute. Please try again later.');
+        } catch (GuzzleException $e) {
+            $fail('An error occurred. Verify your CEP and try again.');
         }
     }
 }
