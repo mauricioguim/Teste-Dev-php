@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
             $table->string('cep', 8);
-            $table->string('street', 255);
-            $table->string('neighborhood', 100);
-            $table->string('city', 100);
+            $table->string('street');
+            $table->string('neighborhood');
+            $table->string('city');
             $table->string('state', 100);
             $table->timestamps();
         });
@@ -30,4 +30,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('addresses');
     }
-};
+}; 
