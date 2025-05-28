@@ -15,8 +15,5 @@ use App\Http\Controllers\ClientController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::apiResource('clients', ClientController::class);
+Route::apiResource('clients', ClientController::class)
+    ->except('show');
