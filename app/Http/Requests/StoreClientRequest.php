@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CEPValidation;
 use App\Rules\CPFValidation;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -52,7 +53,8 @@ class StoreClientRequest extends FormRequest
             ],
             'address.cep' => [
                 'required',
-                'digits:8'
+                'digits:8',
+                new CEPValidation(),
             ],
             'address.street' => [
                 'required',
