@@ -20,9 +20,9 @@ class CEPValidation implements ValidationRule
     /**
      * Create a new validation rule instance.
      */
-    public function __construct(
-    ) {
-        $this->brasilApi = new BrasilApi();
+    public function __construct(BrasilApi $brasilApi)
+    {
+        $this->brasilApi = $brasilApi;
     }
 
     /**
@@ -31,7 +31,6 @@ class CEPValidation implements ValidationRule
      * @param string $attribute
      * @param mixed $value
      * @param Closure(string): PotentiallyTranslatedString $fail
-     * @throws GuzzleException
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {

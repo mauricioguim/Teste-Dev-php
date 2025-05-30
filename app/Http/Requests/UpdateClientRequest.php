@@ -36,7 +36,7 @@ class UpdateClientRequest extends FormRequest
                 'string',
                 'size:11',
                 Rule::unique('clients')->ignore($this->client),
-                new CPFValidation(),
+                app(CPFValidation::class),
             ],
             'email' => [
                 'sometimes',
@@ -55,7 +55,7 @@ class UpdateClientRequest extends FormRequest
             'address.cep' => [
                 'required_with:address',
                 'digits:8',
-                new CEPValidation(),
+                app(CEPValidation::class),
             ],
             'address.street' => [
                 'required_with:address',

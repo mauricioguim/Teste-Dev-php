@@ -35,7 +35,7 @@ class StoreClientRequest extends FormRequest
                 'string',
                 'size:11',
                 'unique:clients',
-                new CPFValidation()
+                app(CPFValidation::class)
             ],
             'email' => [
                 'required',
@@ -54,7 +54,7 @@ class StoreClientRequest extends FormRequest
             'address.cep' => [
                 'required',
                 'digits:8',
-                new CEPValidation(),
+                app(CEPValidation::class),
             ],
             'address.street' => [
                 'required',
