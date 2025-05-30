@@ -9,6 +9,7 @@ services:
         volumes:
             - ./:/var/www:delegated
             - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+            - vendor_data:/var/www/vendor
         ports:
             - "8000:8000"
         env_file:
@@ -41,4 +42,6 @@ networks:
 
 volumes:
     dbdata:
+        driver: local
+    vendor_data:
         driver: local

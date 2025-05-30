@@ -10,7 +10,7 @@
 1. Clone o repositório:
 ```bash
 git clone https://github.com/mauricioguim/Teste-Dev-php.git
-cd all-strategy
+cd Teste-Dev-php
 ```
 
 2. Copie o arquivo de ambiente:
@@ -38,6 +38,9 @@ docker compose up -d --build
 - **Criar Cliente**: `POST /api/clients`
 - **Atualizar Cliente**: `PUT /api/clients/{id}`
 - **Deletar Cliente**: `DELETE /api/clients/{id}`
+
+Para testar os endpoints, você pode usar ferramentas como Postman.
+Na pasta `public` do projeto, você encontrará um arquivo `postman_collection.json` que contém a coleção de requisições para testar a API.'
 
 ## Comandos Úteis
 
