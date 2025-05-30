@@ -5,14 +5,16 @@ services:
             dockerfile: docker/Dockerfile
         container_name: all-strategy-app
         restart: unless-stopped
-        working_dir: /var/www/
+        working_dir: /var/www
         volumes:
-            - ./:/var/www
+            - ./:/var/www:delegated
+            - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         ports:
             - "8000:8000"
-        environment:
-            APP_ENV: local
-            APP_DEBUG: "true"
+        env_file:
+            - .env
+        depends_on:
+            - database
         networks:
             - all-strategy-network
 
@@ -22,9 +24,12 @@ services:
         restart: unless-stopped
         environment:
             MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
         volumes:
             - dbdata:/var/lib/mysql
+            - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
         ports:
             - "3306:3306"
         networks:
