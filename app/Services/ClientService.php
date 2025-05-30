@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Models\Client;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ClientService
@@ -14,9 +14,9 @@ class ClientService
      *
      * @param array $filters
      * @param int $perPage
-     * @return LengthAwarePaginator
+     * @return Paginator
      */
-    public function list(array $filters, int $perPage = 10): LengthAwarePaginator
+    public function list(array $filters, int $perPage = 10): Paginator
     {
         $query = Client::query()->with('address');
 
@@ -34,7 +34,7 @@ class ClientService
             });
         }
 
-        return $query->paginate($perPage);
+        return $query->simplePaginate($perPage);
     }
 
     /**
