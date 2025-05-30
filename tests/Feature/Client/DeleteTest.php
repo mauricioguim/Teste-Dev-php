@@ -19,7 +19,10 @@ class DeleteTest extends ClientTest
     {
         $response = $this->deleteJson(route(self::ROUTES['destroy'], 9999));
 
-        $response->assertStatus(404);
+        $response->assertStatus(404)
+                    ->assertJson([
+                        'message' => 'Resource not found.',
+                    ]);
     }
 
     /**

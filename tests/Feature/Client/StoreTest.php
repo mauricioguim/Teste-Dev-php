@@ -36,7 +36,17 @@ class StoreTest extends ClientTest
         $response = $this->postJson(route(self::ROUTES['store']), $this->clientData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['cpf']);
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'cpf' => ['The cpf has already been taken.']
+                ]
+            ])->assertJsonValidationErrors([
+                'cpf'
+            ])->assertJsonStructure([
+                'message',
+                'errors' => ['cpf']
+            ]);
     }
 
     /**
@@ -51,7 +61,17 @@ class StoreTest extends ClientTest
         $response = $this->postJson(route(self::ROUTES['store']), $this->clientData);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors(['email']);
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'email' => ['The email has already been taken.']
+                ]
+            ])->assertJsonValidationErrors([
+                'email'
+            ])->assertJsonStructure([
+                'message',
+                'errors' => ['email']
+            ]);
     }
 
     /**
@@ -67,6 +87,15 @@ class StoreTest extends ClientTest
         $response = $this->postJson(route(self::ROUTES['store']), $data);
 
         $response->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'name' => ['The name field must not be greater than 255 characters.']
+                ]
+            ])->assertJsonStructure([
+                'message',
+                'errors' => ['name']
+            ])
             ->assertJsonValidationErrors(['name']);
     }
 
@@ -83,6 +112,15 @@ class StoreTest extends ClientTest
         $response = $this->postJson(route(self::ROUTES['store']), $data);
 
         $response->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'cpf' => ['The cpf field must be 11 characters.']
+                ]
+            ])->assertJsonStructure([
+                'message',
+                'errors' => ['cpf']
+            ])
             ->assertJsonValidationErrors(['cpf']);
     }
 
@@ -99,6 +137,15 @@ class StoreTest extends ClientTest
         $response = $this->postJson(route(self::ROUTES['store']), $data);
 
         $response->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'email' => ['The email field must be a valid email address.']
+                ]
+            ])->assertJsonStructure([
+                'message',
+                'errors' => ['email']
+            ])
             ->assertJsonValidationErrors(['email']);
     }
 
@@ -115,6 +162,15 @@ class StoreTest extends ClientTest
         $response = $this->postJson(route(self::ROUTES['store']), $data);
 
         $response->assertStatus(422)
+            ->assertJson([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'phone' => ['The phone field must not be greater than 20 characters.']
+                ]
+            ])->assertJsonStructure([
+                'message',
+                'errors' => ['phone']
+            ])
             ->assertJsonValidationErrors(['phone']);
     }
 
