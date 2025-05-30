@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientResource;
 use App\Models\Client;
 use App\Services\ClientService;
 use Illuminate\Http\JsonResponse;
@@ -26,7 +27,7 @@ class ClientController extends Controller
         $filters = $request->only(['name', 'cpf', 'cep']);
         $clients = $this->clientService->list($filters);
 
-        return response()->json($clients);
+        return response()->json(ClientResource::collection($clients));
     }
 
     /**
@@ -39,7 +40,7 @@ class ClientController extends Controller
     {
         $client = $this->clientService->store($request->validated());
 
-        return response()->json($client, 201);
+        return response()->json(new ClientResource($client), 201);
     }
 
     /**
@@ -53,7 +54,7 @@ class ClientController extends Controller
     {
         $client = $this->clientService->update($client->id, $request->validated());
 
-        return response()->json($client);
+        return response()->json(new ClientResource($client));
     }
 
     /**
