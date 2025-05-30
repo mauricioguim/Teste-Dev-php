@@ -1,24 +1,9 @@
 #!/bin/bash
 set -e
 
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
-
-# Check if .env file exists, if not copy from .env.example
 if [ ! -f .env ]; then
     echo "Creating .env file from .env.example..."
     cp .env.example .env
-fi
-
-if ! command_exists composer; then
-    echo "Error: Composer is not installed"
-    exit 1
-fi
-
-if [ ! -d "vendor" ]; then
-    echo "Installing dependencies..."
-    composer install
 fi
 
 if [ -z "$(grep '^APP_KEY=' .env | cut -d '=' -f2)" ]; then
