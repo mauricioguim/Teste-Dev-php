@@ -23,6 +23,8 @@ cp .env.example .env
 - DB_USERNAME
 - DB_PASSWORD
 
+Obs: Existe um arquivo `mwb` na pasta `public` com o modelo do banco de dados que pode ser importado no MySQL Workbench.
+
 ## Executando com Docker
 
 1. Construa e inicie os containers:
