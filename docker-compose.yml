@@ -1,4 +1,27 @@
 services:
+    database:
+        image: mysql:8.0
+        container_name: all-strategy-db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        ports:
+            - "3306:3306"
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
+        networks:
+            - all-strategy-network
+
     app:
         build:
             context: .
@@ -15,24 +38,8 @@ services:
         env_file:
             - .env
         depends_on:
-            - database
-        networks:
-            - all-strategy-network
-
-    database:
-        image: mysql:8.0
-        container_name: all-strategy-db
-        restart: unless-stopped
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_USER: ${DB_USERNAME}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-        volumes:
-            - dbdata:/var/lib/mysql
-            - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-        ports:
-            - "3306:3306"
+            database:
+                condition: service_healthy
         networks:
             - all-strategy-network
 
